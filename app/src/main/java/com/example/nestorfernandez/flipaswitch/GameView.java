@@ -4,7 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Rect;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -15,6 +16,8 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView {
 
     private Bitmap bmp;
+    private Bitmap backgr = BitmapFactory.decodeResource(getResources(),R.drawable.backimage);
+    private Bitmap green = BitmapFactory.decodeResource(getResources(),R.drawable.green_texture);
     //Declaración de las variables necesarias
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
@@ -54,7 +57,32 @@ public class GameView extends SurfaceView {
 
     @Override
     public void onDraw(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
-        sprite.onDraw(canvas);
+        //Creamos un rectangulo con el tamaño de la pantalla
+        // Rect ( left, top, right, bottom)
+        Rect dst= new Rect(0,0,canvas.getWidth(),canvas.getHeight());
+        //Pintamos el background backgr, adaptandolo al rectangulo dst
+        canvas.drawBitmap(backgr,null,dst,null);
+
+        //Lo mismo para el techo
+        Rect cieling = new Rect(0,0,canvas.getWidth(),90);
+        canvas.drawBitmap(green,null,cieling,null);
+
+        //Creo el rectángulo que contendrá el espacio entre el suelo y el techo de la aplicación
+        Rect game = new Rect(0,cieling.bottom,canvas.getWidth(),canvas.getHeight()-90);
+
+        //Creo y pinto la linea que hará de suelo en el juego. Empieza donde acaba game y mide 25px
+        Rect ground = new Rect(0,game.bottom,canvas.getWidth(),canvas.getHeight());
+        canvas.drawBitmap(green,null,ground,null);
+
+
+
+        //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
+        sprite.onDraw(canvas,game);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        sprite.flipASwitch();
+        return super.onTouchEvent(event);
     }
 }
