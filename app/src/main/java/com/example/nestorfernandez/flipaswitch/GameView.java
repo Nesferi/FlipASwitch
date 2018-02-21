@@ -16,12 +16,14 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView {
 
     private Bitmap bmp;
+    private Bitmap bmpFire;
     private Bitmap backgr = BitmapFactory.decodeResource(getResources(),R.drawable.backimage);
     private Bitmap green = BitmapFactory.decodeResource(getResources(),R.drawable.green_texture);
     //Declaración de las variables necesarias
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
     private Sprite sprite;
+    private SpriteFire spriteFire;
 
 
     //Constructor. Recibe un context, genera el holder y define sus clases
@@ -53,6 +55,8 @@ public class GameView extends SurfaceView {
         });
         bmp= BitmapFactory.decodeResource(getResources(),R.drawable.good);
         sprite = new Sprite(this,bmp);
+        bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);
+        spriteFire = new SpriteFire(this,bmpFire);
     }
 
     @Override
@@ -68,7 +72,7 @@ public class GameView extends SurfaceView {
         canvas.drawBitmap(green,null,cieling,null);
 
         //Creo el rectángulo que contendrá el espacio entre el suelo y el techo de la aplicación
-        Rect game = new Rect(0,cieling.bottom,canvas.getWidth(),canvas.getHeight()-90);
+        Rect game = new Rect(0,cieling.bottom,canvas.getWidth(),canvas.getHeight()-cieling.height());
 
         //Creo y pinto la linea que hará de suelo en el juego. Empieza donde acaba game y mide 25px
         Rect ground = new Rect(0,game.bottom,canvas.getWidth(),canvas.getHeight());
@@ -78,6 +82,7 @@ public class GameView extends SurfaceView {
 
         //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
         sprite.onDraw(canvas,game);
+        spriteFire.onDraw(canvas,ground);
     }
 
     @Override
