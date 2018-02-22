@@ -39,12 +39,11 @@ public class Sprite2 {
         Rect destino=new Rect(x,y,x+width,y+height);
         // Si se sale de los limites del rectángulo jugable,
         // hacemos que deje de moverse en el eje de las Y para que no llegue a salirse
-        Log.i("etiqueta","ySpeed = "+ySpeed);
 
         if (!game.contains(destino)){
             ySpeed=0;
         }
-        Log.i("etiqueta","ySpeed = "+ySpeed);
+        //Log.i("etiqueta","ySpeed = "+ySpeed);
 
         //Al hacer el mod entre el numero de columnas, siempre rota los valores
         //Por ejemplo: 3 columnas va cogiendo 0,1,2,0,1,2,0,1,2...

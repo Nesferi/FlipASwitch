@@ -5,13 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 /**
  * Created by nestor.fernandez on 26/01/2018.
@@ -19,7 +19,6 @@ import java.util.List;
 //Clase que controlará la vista del juego
 public class GameView extends SurfaceView {
 
-    private ArrayList<Bitmap> spriteList = new ArrayList<Bitmap>();
     private Bitmap bmp;
     private Bitmap bmpFire;
     private Bitmap backgr = BitmapFactory.decodeResource(getResources(),R.drawable.backimage);
@@ -28,7 +27,11 @@ public class GameView extends SurfaceView {
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
     private Sprite sprite;
+
+    private ArrayList<SpriteFire> spritesFires = new ArrayList<>();
     private SpriteFire spriteFire;
+
+    private ArrayList<Bitmap> spriteList = new ArrayList<>();
     private Sprite2 sprite2;
 
     private Bitmap bmpp;
@@ -60,10 +63,8 @@ public class GameView extends SurfaceView {
                 gameLoopThread.setRunning(false);
             }
         });
-        bmp= BitmapFactory.decodeResource(getResources(),R.drawable.good);
-        sprite = new Sprite(this,bmp);
-        bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);
-        spriteFire = new SpriteFire(this,bmpFire);
+//        bmp= BitmapFactory.decodeResource(getResources(),R.drawable.good);
+//        sprite = new Sprite(this,bmp);
 
         bmpp= BitmapFactory.decodeResource(getResources(),R.drawable.ninja1);
         spriteList.add(bmpp);
@@ -96,9 +97,22 @@ public class GameView extends SurfaceView {
 
         //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
         sprite2.onDraw(canvas,game);
-        spriteFire.onDraw(canvas,ground);
+        for (int i=0;i<spritesFires.size();i++){
+            spritesFires.get(i).onDraw(canvas,ground);
+        }
 
+    }
 
+    public void fireGenerate(Canvas canvas) {
+        Random rand = new Random();
+        int n = rand.nextInt(100);
+        if(n<=5){
+            bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);
+            spriteFire = new SpriteFire(this,bmpFire,canvas);
+            spritesFires.add(spriteFire);
+            Log.i("etiqueta","fire generated");
+
+        }
     }
 
     @Override

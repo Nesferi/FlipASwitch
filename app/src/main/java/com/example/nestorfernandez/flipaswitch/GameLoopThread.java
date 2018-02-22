@@ -34,6 +34,7 @@ public class GameLoopThread extends Thread {
                 //Llamamos mediante un metodo sincronizado al draw del gameView
                 synchronized (view.getHolder()){
                     view.onDraw(c);
+                    view.fireGenerate(c);
                 }
             }finally{
                 if(c!=null){
