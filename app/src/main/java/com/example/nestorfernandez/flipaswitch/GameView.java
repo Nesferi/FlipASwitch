@@ -9,12 +9,17 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by nestor.fernandez on 26/01/2018.
  */
 //Clase que controlará la vista del juego
 public class GameView extends SurfaceView {
 
+    private ArrayList<Bitmap> spriteList = new ArrayList<Bitmap>();
     private Bitmap bmp;
     private Bitmap bmpFire;
     private Bitmap backgr = BitmapFactory.decodeResource(getResources(),R.drawable.backimage);
@@ -24,7 +29,9 @@ public class GameView extends SurfaceView {
     private GameLoopThread gameLoopThread;
     private Sprite sprite;
     private SpriteFire spriteFire;
+    private Sprite2 sprite2;
 
+    private Bitmap bmpp;
 
     //Constructor. Recibe un context, genera el holder y define sus clases
     public GameView(Context context) {
@@ -57,6 +64,13 @@ public class GameView extends SurfaceView {
         sprite = new Sprite(this,bmp);
         bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);
         spriteFire = new SpriteFire(this,bmpFire);
+
+        bmpp= BitmapFactory.decodeResource(getResources(),R.drawable.ninja1);
+        spriteList.add(bmpp);
+        spriteList.add(BitmapFactory.decodeResource(getResources(),R.drawable.ninja2));
+        spriteList.add(BitmapFactory.decodeResource(getResources(),R.drawable.ninja3));
+        sprite2 = new Sprite2(this,spriteList);
+
     }
 
     @Override
@@ -81,13 +95,15 @@ public class GameView extends SurfaceView {
 
 
         //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
-        sprite.onDraw(canvas,game);
+        sprite2.onDraw(canvas,game);
         spriteFire.onDraw(canvas,ground);
+
+
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        sprite.flipASwitch();
+        sprite2.flipASwitch();
         return super.onTouchEvent(event);
     }
 }
