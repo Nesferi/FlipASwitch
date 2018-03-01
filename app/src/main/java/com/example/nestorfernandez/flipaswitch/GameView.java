@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -55,12 +56,12 @@ public class GameView extends SurfaceView {
                 gameLoopThread.start();
 
             }
-            //Cambio en la vista?
+            //Cambio en la vista (?)
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
             }
-            //Destruccion de la vista?
+            //Destruccion de la vista
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
                 //"Apagamos" el hilo de gameLoop
@@ -77,7 +78,7 @@ public class GameView extends SurfaceView {
     }
 
     private void backgroundGenerate() {
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green0));
+        /*spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green0));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green1));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green2));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green3));
@@ -87,7 +88,7 @@ public class GameView extends SurfaceView {
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green7));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green8));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green9));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green0));
+        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green0));*/
 
 
     }
@@ -129,30 +130,46 @@ public class GameView extends SurfaceView {
     public void onDraw(Canvas canvas) {
         //Creamos un rectangulo con el tamaño de la pantalla
         // Rect ( left, top, right, bottom)
-        Rect dst= new Rect(0,0,canvas.getWidth(),canvas.getHeight());
+        Rect dst= new Rect(0,0,constant.getMobile_width(),constant.getMobile_height());
+
         //Pintamos el background backgr, adaptandolo al rectangulo dst
         canvas.drawBitmap(backgr,null,dst,null);
 
         //Lo mismo para el techo
-        Rect cieling = new Rect(0,0,canvas.getWidth(),90);
-        canvas.drawBitmap(spriteListGround.get(groundFrame),null,cieling,null);
+        Rect cieling = new Rect(0,0,constant.getMobile_width(),constant.getCieling());
+        //canvas.drawBitmap(spriteListGround.get(groundFrame),null,cieling,null);
 
         //Creo el rectángulo que contendrá el espacio entre el suelo y el techo de la aplicación
-        Rect game = new Rect(0,cieling.bottom,canvas.getWidth(),canvas.getHeight()-cieling.height());
+        Rect game = new Rect(0,constant.getCieling(),constant.getMobile_width(),constant.getGround());
 
         //Creo y pinto la linea que hará de suelo en el juego. Empieza donde acaba game y mide 25px
-        Rect ground = new Rect(0,game.bottom,canvas.getWidth(),canvas.getHeight());
-        canvas.drawBitmap(spriteListGround.get(groundFrame),null,ground,null);
+        Rect ground = new Rect(0,constant.getGround(),constant.getMobile_width(),constant.getMobile_height());
+//        canvas.drawBitmap(spriteListGround.get(groundFrame),null,ground,null);
 
         groundFrame=++groundFrame%11;
 
         //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
         sprite2.onDraw(canvas,game);
         for (int i=0;i<spritesFires.size();i++){
-            spritesFires.get(i).onDraw(canvas,ground);
+            spritesFires.get(i).onDraw(canvas);
+            if(spritesFires.get(i).getX()<=0){
+                fireDestroyer();
+                i--;
+            }
         }
-
+        isCollition();
     }
+
+    private void isCollition() {
+        Rect player = sprite2.getPosition();
+        for (int i = 0; i < spritesFires.size(); i++) {
+            Rect fire = spritesFires.get(i).getPosition();
+            if(Rect.intersects(player,fire)){
+               // finish();
+            }
+        }
+    }
+
 
     public void fireGenerate(Canvas canvas) {
         Random rand = new Random();
@@ -162,8 +179,11 @@ public class GameView extends SurfaceView {
             spriteFire = new SpriteFire(this,bmpFire,canvas);
             spritesFires.add(spriteFire);
             Log.i("etiqueta","fire generated");
-
         }
+    }
+
+    public void fireDestroyer(){
+        spritesFires.remove(0);
     }
 
     @Override

@@ -31,6 +31,10 @@ public class GameLoopThread extends Thread {
             startTime= System.currentTimeMillis();
             try{
                 c=view.getHolder().lockCanvas();
+                constant.setMobile_height(c.getHeight());
+                constant.setMobile_width(c.getWidth());
+                constant.setCieling(100);
+                constant.setGround(c.getHeight()-100);
                 //Llamamos mediante un metodo sincronizado al draw del gameView
                 synchronized (view.getHolder()){
                     view.onDraw(c);

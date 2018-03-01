@@ -16,13 +16,14 @@ public class SpriteFire {
     private final int BMP_ROWS=4;
     private final GameView gameView;
     private final Bitmap bmp;
-    private int xSpeed=-10;
+    private int xSpeed=-25;
     private int x;
     private int y;
     private int width;
     private int height;
     private int currentColumn=0;
     private int currentRow=0;
+    private Rect position;
 
     public SpriteFire(GameView gameView, Bitmap bmp,Canvas canvas) {
         this.gameView = gameView;
@@ -57,7 +58,7 @@ public class SpriteFire {
         x+=xSpeed;
     }
 
-    public void onDraw(Canvas canvas, Rect ground){
+    public void onDraw(Canvas canvas){
         update();
 //        y=ground.top+35;
         //El rectangulo empieza segun la posicion de la columna que se quiera coger
@@ -67,9 +68,15 @@ public class SpriteFire {
         //Cogemos "la casilla de sprite" que nos interesa pintar
         Rect src = new Rect(srcX,srcY,srcX+width,srcY+height);
         //Cogemos "la casilla" de las coordenadas del destino
-        Rect dst=new Rect(x,y-height,x+width,y);
-        canvas.drawBitmap(bmp,src,dst,null);
+        position=new Rect(x,y-height,x+width,y);
+        canvas.drawBitmap(bmp,src,position,null);
     }
 
+    public int getX() {
+        return x;
+    }
 
+    public Rect getPosition() {
+        return position;
+    }
 }

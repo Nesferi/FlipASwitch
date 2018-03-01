@@ -26,7 +26,7 @@ public class Sprite2 {
     private int currentPosition=0;
     private boolean switched=false;
     private ArrayList<ArrayList<Bitmap>> spriteList;
-
+    private Rect position;
     private GameView gameView;
 
     public Sprite2(GameView gameView, ArrayList<ArrayList<Bitmap>> spriteList){
@@ -71,8 +71,8 @@ public class Sprite2 {
         //Cogemos "la casilla de sprite" que nos interesa pintar
         Rect src = new Rect(0,0,width,height);
         //Cogemos "la casilla" de las coordenadas del destino
-        Rect dst=new Rect(x,y,x+width,y+height);
-        canvas.drawBitmap(spriteList.get(currentPosition).get(currentFrame),src,dst,null);
+        position=new Rect(x,y,x+width,y+height);
+        canvas.drawBitmap(spriteList.get(currentPosition).get(currentFrame),src,position,null);
     }
 
 
@@ -87,4 +87,7 @@ public class Sprite2 {
         }
     }
 
+    public Rect getPosition() {
+        return position;
+    }
 }
