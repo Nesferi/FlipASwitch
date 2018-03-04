@@ -78,13 +78,16 @@ public class Sprite2 {
 
     public void flipASwitch(){
         Log.i("etiqueta","flipASwitch()");
-        if(!switched){
-            ySpeed=-25;
-            switched=true;
-        }else{
-            ySpeed=25;
-            switched=false;
+        if(ySpeed==0) {
+            if (!switched) {
+                ySpeed = -25;
+                switched = true;
+            } else {
+                ySpeed = 25;
+                switched = false;
+            }
         }
+
     }
 
     public Rect getPosition() {

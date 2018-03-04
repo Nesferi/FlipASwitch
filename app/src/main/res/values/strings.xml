@@ -4,4 +4,7 @@
     <string name="title_activity_menu">MenuActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="play_button">PLAY</string>
+    <string name="exit_button">EXIT</string>
+
 </resources>

@@ -1,6 +1,7 @@
 package com.example.nestorfernandez.flipaswitch;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
@@ -25,16 +26,14 @@ public class SpriteFire {
     private int currentRow=0;
     private Rect position;
 
-    public SpriteFire(GameView gameView, Bitmap bmp,Canvas canvas) {
+    public SpriteFire(GameView gameView, Bitmap bmp,Canvas canvas, int type) {
         this.gameView = gameView;
         this.bmp = bmp;
         this.width=bmp.getWidth()/BMP_COLUMNS;
         this.height=bmp.getHeight()/BMP_ROWS;
         x=canvas.getWidth();
 
-        Random rand = new Random();
-        int n = rand.nextInt(2);
-        if (n==0){
+        if (type==0){
             y=canvas.getHeight()-90;
         }else{
             y=90+height;

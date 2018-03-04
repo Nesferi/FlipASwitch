@@ -1,10 +1,12 @@
 package com.example.nestorfernandez.flipaswitch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by nestor.fernandez on 26/01/2018.
@@ -23,6 +27,10 @@ public class GameView extends SurfaceView {
     private Bitmap bmp;
     private Bitmap bmpFire;
     private Bitmap backgr = BitmapFactory.decodeResource(getResources(),R.drawable.backimage);
+    private Bitmap backgr2;
+    private int backframe = 0;
+    private final int back_width = 1270;
+    private final int back_height = 640;
 //    private Bitmap green = BitmapFactory.decodeResource(getResources(),R.drawable.green_texture);
     //Declaración de las variables necesarias
     private SurfaceHolder holder;
@@ -72,14 +80,16 @@ public class GameView extends SurfaceView {
 //        sprite = new Sprite(this,bmp);
 
         ninjaGenerate();
-        backgroundGenerate();
+        //backgroundGenerate();
         sprite2 = new Sprite2(this,spriteList);
+        backgr2 = BitmapFactory.decodeResource(getResources(),R.mipmap.backimage2);
+        Log.i("etiqueta","backgr2. right: "+backgr2.getWidth()+" , Height: "+backgr2.getHeight());
+
 
     }
 
     private void backgroundGenerate() {
-        /*spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green0));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green1));
+       /* spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green1));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green2));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green3));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green4));
@@ -88,9 +98,8 @@ public class GameView extends SurfaceView {
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green7));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green8));
         spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green9));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green0));*/
-
-
+        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green10));
+        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green11));*/
     }
 
     public void ninjaGenerate(){
@@ -130,23 +139,31 @@ public class GameView extends SurfaceView {
     public void onDraw(Canvas canvas) {
         //Creamos un rectangulo con el tamaño de la pantalla
         // Rect ( left, top, right, bottom)
-        Rect dst= new Rect(0,0,constant.getMobile_width(),constant.getMobile_height());
+        //Rect dst= new Rect(0,0,constant.getMobile_width(),constant.getMobile_height());
+        Rect dst= new Rect(0,0,canvas.getWidth(),canvas.getHeight());
 
+        //Cogemos el frame de background que queramos
+        int left = (int) (backframe*0.02*back_width);
+        int right =  left+back_width;
+        Rect background = new Rect(left,0,right,backgr2.getHeight());
+        /*Log.i("etiqueta","background. right: "+background.width()+" - "+backgr2.getWidth()+" ," +
+                " Height: "+background.height()+" - "+backgr2.getHeight()+" canvas height: "+canvas.getHeight()+" canvas width: "+canvas.getWidth());*/
         //Pintamos el background backgr, adaptandolo al rectangulo dst
-        canvas.drawBitmap(backgr,null,dst,null);
+        canvas.drawBitmap(backgr2,background /*background*/,dst,null);
 
         //Lo mismo para el techo
-        Rect cieling = new Rect(0,0,constant.getMobile_width(),constant.getCieling());
+        //Rect cieling = new Rect(0,0,constant.getMobile_width(),constant.getCieling());
         //canvas.drawBitmap(spriteListGround.get(groundFrame),null,cieling,null);
 
         //Creo el rectángulo que contendrá el espacio entre el suelo y el techo de la aplicación
         Rect game = new Rect(0,constant.getCieling(),constant.getMobile_width(),constant.getGround());
 
         //Creo y pinto la linea que hará de suelo en el juego. Empieza donde acaba game y mide 25px
-        Rect ground = new Rect(0,constant.getGround(),constant.getMobile_width(),constant.getMobile_height());
-//        canvas.drawBitmap(spriteListGround.get(groundFrame),null,ground,null);
+        //Rect ground = new Rect(0,constant.getGround(),constant.getMobile_width(),constant.getMobile_height());
+        //canvas.drawBitmap(spriteListGround.get(groundFrame),null,ground,null);
 
         groundFrame=++groundFrame%11;
+        backframe=++backframe%50;
 
         //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
         sprite2.onDraw(canvas,game);
@@ -165,7 +182,11 @@ public class GameView extends SurfaceView {
         for (int i = 0; i < spritesFires.size(); i++) {
             Rect fire = spritesFires.get(i).getPosition();
             if(Rect.intersects(player,fire)){
-               // finish();
+               /*Intent data = new Intent();
+               String text = "Partida completada";
+               data.setData(Uri.parse(text));
+               setResult(RESULT_OK,data);
+               finish();*/
             }
         }
     }
@@ -175,10 +196,20 @@ public class GameView extends SurfaceView {
         Random rand = new Random();
         int n = rand.nextInt(100);
         if(n<=5){
-            bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);
-            spriteFire = new SpriteFire(this,bmpFire,canvas);
-            spritesFires.add(spriteFire);
-            Log.i("etiqueta","fire generated");
+            int type = rand.nextInt(2);
+            if(type==0){
+                bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);
+                spriteFire = new SpriteFire(this,bmpFire,canvas,0);
+                spritesFires.add(spriteFire);
+                Log.i("etiqueta","fire generated");
+            }else{
+                bmpFire = BitmapFactory.decodeResource(getResources(),R.drawable.flyguy2);
+                spriteFire = new SpriteFire(this,bmpFire,canvas,1);
+                spritesFires.add(spriteFire);
+                Log.i("etiqueta","flyguy generated");
+
+            }
+
         }
     }
 

@@ -26,7 +26,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ctx,GameActivity.class);
                 startActivity(intent);
-                //startActivityForResult(intent,27)
+                //startActivityForResult(intent,27);
             }
         });
 
@@ -37,5 +37,10 @@ public class MenuActivity extends AppCompatActivity {
                 System.exit(1);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
