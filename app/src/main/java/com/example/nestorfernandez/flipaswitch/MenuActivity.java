@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
@@ -16,7 +18,13 @@ public class MenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Eliminamos el título de la pantalla
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Habilitamos el modo fullscreen a la aplicación
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_menu);
+
 
         btnPlay = (Button) findViewById(R.id.btnPlay);
         btnExit = (Button) findViewById(R.id.btnExit);
@@ -26,7 +34,6 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ctx,GameActivity.class);
                 startActivity(intent);
-                //startActivityForResult(intent,27);
             }
         });
 

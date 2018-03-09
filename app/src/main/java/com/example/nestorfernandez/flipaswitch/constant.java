@@ -4,11 +4,12 @@ package com.example.nestorfernandez.flipaswitch;
  * Created by nestor.fernandez on 01/03/2018.
  */
 
-public class constant {
+public abstract class constant {
     private static int mobile_height;
     private static int mobile_width;
     private static int ground;
     private static int cieling;
+    private static int points;
 
     public static int getMobile_height() {
         return mobile_height;
@@ -40,5 +41,17 @@ public class constant {
 
     public static void setCieling(int cieling) {
         constant.cieling = cieling;
+    }
+
+    public static int getPoints() {
+        return points/100;
+    }
+
+    public static void setPoints(int points) {
+        constant.points = points;
+    }
+
+    public static void incrementPoints(){
+        points++;
     }
 }

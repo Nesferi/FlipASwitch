@@ -23,7 +23,8 @@ public class GameLoopThread extends Thread {
     @Override
     public void run() {
         //Comprobacion de que está activado
-        long tiksPS=100;
+        long FPS = 60;
+        long tiksPS=1000/FPS;
         long startTime;
         long sleepTime;
         while(running){
@@ -48,7 +49,7 @@ public class GameLoopThread extends Thread {
             }
             sleepTime=tiksPS-(System.currentTimeMillis()-startTime);
             try {
-                if (sleepTime > 0)
+                if (sleepTime > 10)
                     sleep(sleepTime);
                 else
                     sleep(10);

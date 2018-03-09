@@ -1,12 +1,18 @@
 package com.example.nestorfernandez.flipaswitch;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -174,7 +180,21 @@ public class GameView extends SurfaceView {
                 i--;
             }
         }
+
+        drawPuntuacion(canvas);
         isCollition();
+    }
+
+    private void drawPuntuacion(Canvas canvas) {
+        /*Paint paint = new Paint();
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(15);
+        canvas.drawPaint(paint);
+
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(20);
+        canvas.drawText("Puntuacion: "+constant.getPoints(), 100, 25, paint);*/
+
     }
 
     private void isCollition() {
@@ -182,11 +202,8 @@ public class GameView extends SurfaceView {
         for (int i = 0; i < spritesFires.size(); i++) {
             Rect fire = spritesFires.get(i).getPosition();
             if(Rect.intersects(player,fire)){
-               /*Intent data = new Intent();
-               String text = "Partida completada";
-               data.setData(Uri.parse(text));
-               setResult(RESULT_OK,data);
-               finish();*/
+                Activity activity = (Activity) getContext();
+               activity.finish();
             }
         }
     }
@@ -222,4 +239,6 @@ public class GameView extends SurfaceView {
         sprite2.flipASwitch();
         return super.onTouchEvent(event);
     }
+
+
 }
