@@ -4,17 +4,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.example.nestorfernandez.flipaswitch.Game.GameActivity;
+
 public class MenuActivity extends AppCompatActivity {
 
     private Button btnPlay;
-    private Button btnExit;
+    private Button btnLeaderboard;
+    private Button btnLogIn;
+    private Button btnRegister;
     private Context ctx = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,17 +31,34 @@ public class MenuActivity extends AppCompatActivity {
 
 
         btnPlay = (Button) findViewById(R.id.btnPlay);
-        btnExit = (Button) findViewById(R.id.btnExit);
+        btnLogIn = (Button) findViewById(R.id.btnLog);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnLeaderboard = (Button) findViewById(R.id.btnLeaderboard);
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ctx,GameActivity.class);
                 startActivity(intent);
+
             }
         });
 
-        btnExit.setOnClickListener(new View.OnClickListener() {
+        btnLogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnLeaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 android.os.Process.killProcess(android.os.Process.myPid());
@@ -46,8 +67,5 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+
 }

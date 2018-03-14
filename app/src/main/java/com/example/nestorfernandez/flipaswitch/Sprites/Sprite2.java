@@ -1,16 +1,13 @@
-package com.example.nestorfernandez.flipaswitch;
+package com.example.nestorfernandez.flipaswitch.Sprites;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
 
-import com.example.nestorfernandez.flipaswitch.GameView;
+import com.example.nestorfernandez.flipaswitch.Game.GameView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Sprite2 {
 

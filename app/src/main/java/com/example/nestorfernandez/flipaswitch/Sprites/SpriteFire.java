@@ -1,12 +1,11 @@
-package com.example.nestorfernandez.flipaswitch;
+package com.example.nestorfernandez.flipaswitch.Sprites;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
 
-import java.util.Random;
+import com.example.nestorfernandez.flipaswitch.Game.GameView;
 
 /**
  * Created by nestor.fernandez on 08/02/2018.

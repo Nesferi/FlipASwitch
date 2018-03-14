@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "256399105529",
+    "firebase_url": "https://flipaswitch-1ce6c.firebaseio.com",
+    "project_id": "flipaswitch-1ce6c",
+    "storage_bucket": "flipaswitch-1ce6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256399105529:android:e51b0861d5832ef4",
+        "android_client_info": {
+          "package_name": "com.example.nestorfernandez.flipaswitch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256399105529-c9o9obqj6ljvgc9vf9mns8ta61ihj0mq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5APkHqLu-GXD4eODaLdDHYMsU1d_3CGc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

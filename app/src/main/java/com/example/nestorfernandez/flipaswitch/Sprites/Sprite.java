@@ -1,22 +1,23 @@
-package com.example.nestorfernandez.flipaswitch;
+package com.example.nestorfernandez.flipaswitch.Sprites;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.example.nestorfernandez.flipaswitch.Game.GameView;
+
 /**
- * Created by nestor.fernandez on 08/02/2018.
+ * Created by nestor.fernandez on 26/01/2018.
  */
 
-public class SpriteCell {
+public class Sprite {
 
 
     private final int BMP_COLUMNS=3;
     private final int BMP_ROWS=4;
-    private int xSpeed=10;
     private int ySpeed=15;
-    private int x=0;
+    private int x=200;
     private int y=200;
     private int width;
     private int height;
@@ -27,7 +28,7 @@ public class SpriteCell {
     private Bitmap bmp;
     private GameView gameView;
 
-    public SpriteCell(GameView gameView, Bitmap bmp){
+    public Sprite(GameView gameView, Bitmap bmp){
         this.gameView = gameView;
         this.bmp = bmp;
         this.width=bmp.getWidth()/BMP_COLUMNS;
@@ -35,16 +36,11 @@ public class SpriteCell {
     }
 
     private void update(Rect game){
-        //Si llega a alguno de los margenes, media vuelta
-        if(x>gameView.getWidth()-width-xSpeed || x +xSpeed<0){
-            xSpeed=-xSpeed;
-        }
-        x=x+xSpeed;
         y=y+ySpeed;
         //Calculamos la casilla de destino teórico
         Rect destino=new Rect(x,y,x+width,y+height);
         // Si se sale de los limites del rectángulo jugable,
-        // hacemos que deje de moverse en el eje de las Y para que llegue a salirse
+        // hacemos que deje de moverse en el eje de las Y para que no llegue a salirse
         Log.i("etiqueta","ySpeed = "+ySpeed);
 
         if (!game.contains(destino)){
@@ -61,8 +57,8 @@ public class SpriteCell {
         update(game);
         //El rectangulo empieza segun la posicion de la columna que se quiera coger
         int srcX=currentFrame*width;
-        //El rectangulo empieza en una fila distitna en funcion de la orientacion
-        int srcY=getOrientacion()*height;
+        //El rectangulo empieza en la fila donde se situan los sprites de "avance hacia la derecha"
+        int srcY=2*height;
         //Cogemos "la casilla de sprite" que nos interesa pintar
         Rect src = new Rect(srcX,srcY,srcX+width,srcY+height);
         //Cogemos "la casilla" de las coordenadas del destino
@@ -70,23 +66,16 @@ public class SpriteCell {
         canvas.drawBitmap(bmp,src,dst,null);
     }
 
-    private int getOrientacion(){
-        if(xSpeed>0){
-            return 2;
-        }
-        return 1;
-    }
 
     public void flipASwitch(){
         Log.i("etiqueta","flipASwitch()");
         if(!switched){
-            ySpeed=-15;
+            ySpeed=-25;
             switched=true;
         }else{
-            ySpeed=15;
+            ySpeed=25;
             switched=false;
         }
     }
 
 }
-

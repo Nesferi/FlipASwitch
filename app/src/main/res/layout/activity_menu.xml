@@ -17,35 +17,56 @@
             android:id="@+id/btnPlay"
             android:layout_width="189dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:text="@string/play_button"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.294" />
+            app:layout_constraintVertical_bias="0.276" />
 
         <Button
-            android:id="@+id/btnExit"
+            android:id="@+id/btnLog"
             android:layout_width="189dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/Log_In"
+            app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+            app:layout_constraintTop_toBottomOf="@+id/btnPlay"
+            tools:layout_editor_absoluteX="202dp" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/Register"
+            app:layout_constraintBottom_toTopOf="@+id/btnLeaderboard"
+            app:layout_constraintTop_toBottomOf="@+id/btnLog"
+            tools:layout_editor_absoluteX="202dp" />
+
+        <Button
+            android:id="@+id/btnLeaderboard"
+            android:layout_width="189dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_weight="1"
-            android:text="@string/exit_button"
+            android:text="@string/LeaderBoard"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnPlay"
-            app:layout_constraintVertical_bias="0.082" />
+            app:layout_constraintTop_toBottomOf="@+id/btnRegister" />
 
     </android.support.constraint.ConstraintLayout>
 

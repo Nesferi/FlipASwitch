@@ -1,6 +1,8 @@
-package com.example.nestorfernandez.flipaswitch;
+package com.example.nestorfernandez.flipaswitch.Game;
 
 import android.graphics.Canvas;
+
+import com.example.nestorfernandez.flipaswitch.constant;
 
 /**
  * Created by nestor.fernandez on 26/01/2018.
@@ -27,19 +29,24 @@ public class GameLoopThread extends Thread {
         long tiksPS=1000/FPS;
         long startTime;
         long sleepTime;
+        constant.setPoints(0);
         while(running){
             Canvas c = null;
             startTime= System.currentTimeMillis();
             try{
                 c=view.getHolder().lockCanvas();
-                constant.setMobile_height(c.getHeight());
-                constant.setMobile_width(c.getWidth());
-                constant.setCieling(100);
-                constant.setGround(c.getHeight()-100);
+                if(constant.getMobile_width()==-1){
+                    constant.setMobile_height(c.getHeight());
+                    constant.setMobile_width(c.getWidth());
+                    constant.setCieling(100);
+                    constant.setGround(c.getHeight()-100);
+                }
+
                 //Llamamos mediante un metodo sincronizado al draw del gameView
                 synchronized (view.getHolder()){
                     view.onDraw(c);
                     view.fireGenerate(c);
+                    constant.incrementPoints();
                 }
             }finally{
                 if(c!=null){

@@ -6,7 +6,7 @@ package com.example.nestorfernandez.flipaswitch;
 
 public abstract class constant {
     private static int mobile_height;
-    private static int mobile_width;
+    private static int mobile_width=-1;
     private static int ground;
     private static int cieling;
     private static int points;
@@ -44,7 +44,7 @@ public abstract class constant {
     }
 
     public static int getPoints() {
-        return points/100;
+        return points/10;
     }
 
     public static void setPoints(int points) {
