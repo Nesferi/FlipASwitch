@@ -47,7 +47,7 @@ public class GameView extends SurfaceView {
     private ArrayList<Bitmap> spriteListGround = new ArrayList<>();
     private Sprite2 sprite2;
 
-    private AudioService music = new AudioService();
+    //private AudioService music = new AudioService();
 
     //Constructor. Recibe un context, genera el holder y define sus clases
     public GameView(Context context) {
@@ -89,7 +89,7 @@ public class GameView extends SurfaceView {
         paint.setTextSize(35);
         paint.setColor(Color.BLACK);
 
-        music.startMusic();
+       // music.startMusic();
 
     }
 
@@ -182,7 +182,7 @@ public class GameView extends SurfaceView {
 
         canvas.drawText(constant.getPoints()+"Pts", constant.getMobile_width()/2, 50, paint);
         if(isCollition()){
-            music.stopMusic();
+            //music.stopMusic();
             Activity activity = (Activity) getContext();
             activity.finish();
         }
@@ -204,7 +204,7 @@ public class GameView extends SurfaceView {
     public void fireGenerate(Canvas canvas) {
         Random rand = new Random();
         int n = rand.nextInt(100);
-        if(n<=1){
+        if(n<0){
             int type = rand.nextInt(2);
             if(type==0){
                 bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);

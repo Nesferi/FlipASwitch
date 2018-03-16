@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service android:name=".AudioService"></service>
         <activity
             android:name=".Game.GameActivity"
             android:screenOrientation="landscape"
