@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nestorfernandez.flipaswitch.Game.GameActivity;
+import com.example.nestorfernandez.flipaswitch.Model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -69,6 +70,7 @@ public class MenuActivity extends Activity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showLogInDialog();
 
             }
         });
@@ -90,6 +92,44 @@ public class MenuActivity extends Activity {
 
     }
 
+    private void showLogInDialog() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle("LOGIN");
+        dialog.setMessage("Registrate");
+
+        LayoutInflater inflater=LayoutInflater.from(this);
+        View register = inflater.inflate(R.layout.register,null);
+        dialog.setView(register);
+
+        final EditText emailText= register.findViewById(R.id.emailText);
+        final EditText passwordText= register.findViewById(R.id.passwordText);
+
+        dialog.setPositiveButton("LOGIN", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                auth.signInWithEmailAndPassword("df","DASF")
+//                        .onS
+                auth.signInWithEmailAndPassword(emailText.getText().toString(),passwordText.getText().toString())
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                /*Se ha registrado bien*/
+                                Toast.makeText(ctx, "Usuario logeado", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(ctx, "Error en el logeo", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        });
+        dialog.show();
+
+    }
+
     private void showRegisterDialog() {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setTitle("REGISTER");
@@ -105,15 +145,18 @@ public class MenuActivity extends Activity {
         dialog.setPositiveButton("REGISTER", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                auth.signInWithEmailAndPassword("df","DASF")
-                        .onS
+//                auth.signInWithEmailAndPassword("df","DASF")
+//                        .onS
                 auth.createUserWithEmailAndPassword(emailText.getText().toString(),passwordText.getText().toString())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 /*Se ha registrado bien*/
                                 Toast.makeText(ctx, "Usuario registrado", Toast.LENGTH_SHORT).show();
-                                users.push().setValue("hoal");
+                                User user = new User();
+                                user.setName("Name");
+                                user.setEmail(emailText.getText().toString());
+                                users.child(auth.getCurrentUser().getUid()).setValue(user);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
