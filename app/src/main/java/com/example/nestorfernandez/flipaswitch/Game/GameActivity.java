@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.nestorfernandez.flipaswitch.Model.Points;
 import com.example.nestorfernandez.flipaswitch.Model.User;
 import com.example.nestorfernandez.flipaswitch.constant;
 
@@ -92,27 +93,47 @@ public class GameActivity extends Activity {
         auth=FirebaseAuth.getInstance();
         db=FirebaseDatabase.getInstance();
         if(auth.getCurrentUser()!=null) {
-            db.getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.i("Datos",dataSnapshot.getValue().toString());
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
+//            db.getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    Log.i("Datos1",dataSnapshot.getValue().toString());
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
             db.getReference("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.i("Datos",dataSnapshot.toString());
-                  User usuario=dataSnapshot.getValue(User.class);
-                    db.getReference("puntos").child(usuario.getName()).setValue(constant.getPoints());
+                    Log.i("Datos user ",dataSnapshot.toString());
+                    User usuario=dataSnapshot.getValue(User.class);
+                    db.getReference("points").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Log.i("Datos puntos ",dataSnapshot.toString());
+
+                            Points points = new Points();
+                            points.setName(dataSnapshot.getKey());
+                            points.setPoints(constant.getPoints());
+
+//                            Points points2 = dataSnapshot.getValue(Points.class);
+//                            Log.i("Datos puntos 2---------",points2.toString());
+
+                            db.getReference("puntos").child(dataSnapshot.getKey()).setValue(points);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }
 
                 @Override
+
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
@@ -120,6 +141,6 @@ public class GameActivity extends Activity {
 
         }
         else
-            Toast.makeText(this,"Necesitas estar registrado", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Necesitas estar registrado para guardar tus datos", Toast.LENGTH_LONG).show();
     }
 }

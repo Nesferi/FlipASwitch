@@ -15,14 +15,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="UserName"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/passwordText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Password"
             android:inputType="textPassword" />
     </LinearLayout>
 

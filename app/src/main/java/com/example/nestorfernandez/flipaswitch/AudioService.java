@@ -24,7 +24,7 @@ public class AudioService extends Service {
 
     @Override
     public void onCreate() {
-        audio= MediaPlayer.create(this,R.raw.ostia_tio);
+        audio= MediaPlayer.create(this,R.raw.immigrant_song);
 
     }
 
@@ -63,7 +63,7 @@ public class AudioService extends Service {
     }
 
     public void stopMusic(){
-        stopSelf();
+        audio.release();
     }
 
 

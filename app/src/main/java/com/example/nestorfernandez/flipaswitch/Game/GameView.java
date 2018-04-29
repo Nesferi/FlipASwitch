@@ -47,7 +47,6 @@ public class GameView extends SurfaceView {
     private ArrayList<Bitmap> spriteListGround = new ArrayList<>();
     private Sprite2 sprite2;
 
-    //private AudioService music = new AudioService();
 
     //Constructor. Recibe un context, genera el holder y define sus clases
     public GameView(Context context) {
@@ -76,11 +75,8 @@ public class GameView extends SurfaceView {
                 gameLoopThread.setRunning(false);
             }
         });
-//        bmp= BitmapFactory.decodeResource(getResources(),R.drawable.good);
-//        sprite = new Sprite(this,bmp);
 
         ninjaGenerate();
-        //backgroundGenerate();
         sprite2 = new Sprite2(this,spriteList);
         backgr2 = BitmapFactory.decodeResource(getResources(),R.mipmap.backimage2);
         Log.i("etiqueta","backgr2. right: "+backgr2.getWidth()+" , Height: "+backgr2.getHeight());
@@ -89,23 +85,9 @@ public class GameView extends SurfaceView {
         paint.setTextSize(35);
         paint.setColor(Color.BLACK);
 
-       // music.startMusic();
 
     }
 
-    private void backgroundGenerate() {
-       /* spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green1));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green2));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green3));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green4));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green5));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green6));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green7));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green8));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green9));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green10));
-        spriteListGround.add(BitmapFactory.decodeResource(getResources(),R.drawable.green11));*/
-    }
 
     private void ninjaGenerate(){
         spriteListRun.add(BitmapFactory.decodeResource(getResources(),R.drawable.ninja1));
@@ -156,18 +138,11 @@ public class GameView extends SurfaceView {
         //Pintamos el background backgr, adaptandolo al rectangulo dst
         canvas.drawBitmap(backgr2,background /*background*/,dst,null);
 
-        //Lo mismo para el techo
-        //Rect cieling = new Rect(0,0,constant.getMobile_width(),constant.getCieling());
-        //canvas.drawBitmap(spriteListGround.get(groundFrame),null,cieling,null);
 
         //Creo el rectángulo que contendrá el espacio entre el suelo y el techo de la aplicación
         Rect game = new Rect(0, constant.getCieling(),constant.getMobile_width(),constant.getGround());
 
-        //Creo y pinto la linea que hará de suelo en el juego. Empieza donde acaba game y mide 25px
-        //Rect ground = new Rect(0,constant.getGround(),constant.getMobile_width(),constant.getMobile_height());
-        //canvas.drawBitmap(spriteListGround.get(groundFrame),null,ground,null);
 
-        //groundFrame=++groundFrame%11;
         backframe=++backframe%50;
 
         //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
@@ -182,7 +157,6 @@ public class GameView extends SurfaceView {
 
         canvas.drawText(constant.getPoints()+"Pts", constant.getMobile_width()/2, 50, paint);
         if(isCollition()){
-            //music.stopMusic();
             Activity activity = (Activity) getContext();
             activity.finish();
         }
@@ -204,7 +178,7 @@ public class GameView extends SurfaceView {
     public void fireGenerate(Canvas canvas) {
         Random rand = new Random();
         int n = rand.nextInt(100);
-        if(n<0){
+        if(n<5){
             int type = rand.nextInt(2);
             if(type==0){
                 bmpFire= BitmapFactory.decodeResource(getResources(),R.drawable.fire2);
