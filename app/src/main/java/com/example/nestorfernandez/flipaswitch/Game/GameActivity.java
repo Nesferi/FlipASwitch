@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.example.nestorfernandez.flipaswitch.BDHelper;
 import com.example.nestorfernandez.flipaswitch.Model.Points;
 import com.example.nestorfernandez.flipaswitch.Model.User;
 import com.example.nestorfernandez.flipaswitch.constant;
@@ -32,8 +33,8 @@ public class GameActivity extends Activity {
     private ServiceConnection serviceConnection;
     private boolean isServiceBound;
     private AudioService audioService;
-    private FirebaseAuth auth;
-    private FirebaseDatabase db;
+//    private FirebaseAuth auth;
+//    private FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class GameActivity extends Activity {
                 isServiceBound=false;
             }
         };
-        bindService(serviceIntent,serviceConnection, Context.BIND_AUTO_CREATE);
+//        bindService(serviceIntent,serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
     /*
@@ -90,9 +91,15 @@ public class GameActivity extends Activity {
         super.finish();
         stopService(serviceIntent);
         Log.i("etiqueta","activity finish");
-        auth=FirebaseAuth.getInstance();
-        db=FirebaseDatabase.getInstance();
-        if(auth.getCurrentUser()!=null) {
+
+        BDHelper helper = new BDHelper(this);
+        helper.openDB();
+        helper.regisPuntos("usuario",constant.getPoints());
+        helper.closeDB();
+
+//        auth=FirebaseAuth.getInstance();
+//        db=FirebaseDatabase.getInstance();
+//        if(auth.getCurrentUser()!=null) {
 //            db.getReference("users").addListenerForSingleValueEvent(new ValueEventListener() {
 //                @Override
 //                public void onDataChange(DataSnapshot dataSnapshot) {
@@ -104,43 +111,44 @@ public class GameActivity extends Activity {
 //
 //                }
 //            });
-            db.getReference("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    Log.i("Datos user ",dataSnapshot.toString());
-                    User usuario=dataSnapshot.getValue(User.class);
-                    db.getReference("points").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Log.i("Datos puntos ",dataSnapshot.toString());
-
-                            Points points = new Points();
-                            points.setName(dataSnapshot.getKey());
-                            points.setPoints(constant.getPoints());
-
+//            db.getReference("users").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    Log.i("Datos user ",dataSnapshot.toString());
+//                    User usuario=dataSnapshot.getValue(User.class);
+//                    db.getReference("points").child(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            Log.i("Datos puntos ",dataSnapshot.toString());
+//
+//                            Points points = new Points();
+//                            points.setName(dataSnapshot.getKey());
+//                            points.setPoints(constant.getPoints());
+//
 //                            Points points2 = dataSnapshot.getValue(Points.class);
 //                            Log.i("Datos puntos 2---------",points2.toString());
 
-                            db.getReference("puntos").child(dataSnapshot.getKey()).setValue(points);
-                        }
+//                            db.getReference("puntos").child(dataSnapshot.getKey()).setValue(points);
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//
+//                }
+//
+//                @Override
+//
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                }
-
-                @Override
-
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-        else
-            Toast.makeText(this,"Necesitas estar registrado para guardar tus datos", Toast.LENGTH_LONG).show();
+//        }
+//        else{
+//            Toast.makeText(this,"Necesitas estar registrado para guardar tus datos", Toast.LENGTH_LONG).show();
+//        }
     }
 }

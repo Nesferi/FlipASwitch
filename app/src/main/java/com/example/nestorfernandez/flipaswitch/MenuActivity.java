@@ -36,9 +36,9 @@ public class MenuActivity extends Activity {
     private Button btnRegister;
     private TextView asUsertxt;
     private Context ctx = this;
-    FirebaseAuth auth;
-    FirebaseDatabase db;
-    DatabaseReference users;
+//    FirebaseAuth auth;
+//    FirebaseDatabase db;
+//    DatabaseReference users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +58,14 @@ public class MenuActivity extends Activity {
         asUsertxt = (TextView) findViewById(R.id.userTextView);
 
         //FIREBASE
-        auth = FirebaseAuth.getInstance();
-        db=FirebaseDatabase.getInstance();
-        users=db.getReference("users");
-        //DatabaseReference puntos = db.getReference("puntos");
-            if (auth != null && auth.getCurrentUser() != null && auth.getCurrentUser().getEmail() != null) {
-                String[] username = auth.getCurrentUser().getEmail().split("@");
-                asUsertxt.setText("as " + username[0]);
-            }
+//        auth = FirebaseAuth.getInstance();
+//        db=FirebaseDatabase.getInstance();
+//        users=db.getReference("users");
+//        DatabaseReference puntos = db.getReference("puntos");
+//            if (auth != null && auth.getCurrentUser() != null && auth.getCurrentUser().getEmail() != null) {
+//                String[] username = auth.getCurrentUser().getEmail().split("@");
+//                asUsertxt.setText("as " + username[0]);
+//            }
 
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
@@ -80,16 +80,19 @@ public class MenuActivity extends Activity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showLogInDialog();
+                BDHelper helper = new BDHelper(ctx);
+                helper.openDB();
+                helper.matalosATodos();
+                helper.closeDB();
             }
         });
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRegisterDialog();
-            }
-        });
+//        btnRegister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showRegisterDialog();
+//            }
+//        });
 
         btnLeaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,91 +106,91 @@ public class MenuActivity extends Activity {
 
     }
 
-    private void showLogInDialog() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("LOGIN");
-        dialog.setMessage("La contraseña debe tener 6 caracteres como mínimo");
+//    private void showLogInDialog() {
+//        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("LOGIN");
+//        dialog.setMessage("La contraseña debe tener 6 caracteres como mínimo");
+//
+//        LayoutInflater inflater=LayoutInflater.from(this);
+//        View register = inflater.inflate(R.layout.register,null);
+//        dialog.setView(register);
+//
+//        final EditText emailText= register.findViewById(R.id.emailText);
+//        final EditText passwordText= register.findViewById(R.id.passwordText);
+//
+//        dialog.setPositiveButton("LOGIN", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+////                auth.signInWithEmailAndPassword("df","DASF")
+////                        .onS
+//                auth.signInWithEmailAndPassword(emailText.getText().toString()+"@FlipASwitch.com",passwordText.getText().toString())
+//                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+//                            @Override
+//                            public void onSuccess(AuthResult authResult) {
+//                                /*Se ha registrado bien*/
+//                                Toast.makeText(ctx, "Usuario logeado", Toast.LENGTH_SHORT).show();
+//                                if(auth.getCurrentUser().getEmail() != null){
+//                                    String[] username = auth.getCurrentUser().getEmail().split("@");
+//                                    asUsertxt.setText("as "+username[0]);
+//                                }
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Toast.makeText(ctx, "Error en el logeo", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//            }
+//        });
+//        dialog.show();
+//
+//    }
 
-        LayoutInflater inflater=LayoutInflater.from(this);
-        View register = inflater.inflate(R.layout.register,null);
-        dialog.setView(register);
-
-        final EditText emailText= register.findViewById(R.id.emailText);
-        final EditText passwordText= register.findViewById(R.id.passwordText);
-
-        dialog.setPositiveButton("LOGIN", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-//                auth.signInWithEmailAndPassword("df","DASF")
-//                        .onS
-                auth.signInWithEmailAndPassword(emailText.getText().toString()+"@FlipASwitch.com",passwordText.getText().toString())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                /*Se ha registrado bien*/
-                                Toast.makeText(ctx, "Usuario logeado", Toast.LENGTH_SHORT).show();
-                                if(auth.getCurrentUser().getEmail() != null){
-                                    String[] username = auth.getCurrentUser().getEmail().split("@");
-                                    asUsertxt.setText("as "+username[0]);
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ctx, "Error en el logeo", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        });
-        dialog.show();
-
-    }
-
-    private void showRegisterDialog() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("REGISTER");
-        dialog.setMessage("La contraseña debe tener 6 caracteres como mínimo");
-
-        LayoutInflater inflater=LayoutInflater.from(this);
-        View register = inflater.inflate(R.layout.register,null);
-        dialog.setView(register);
-
-        final EditText emailText= register.findViewById(R.id.emailText);
-        final EditText passwordText= register.findViewById(R.id.passwordText);
-
-        dialog.setPositiveButton("REGISTER", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-//                auth.signInWithEmailAndPassword("df","DASF")
-//                        .onS
-                auth.createUserWithEmailAndPassword(emailText.getText().toString()+"@FlipASwitch.com",passwordText.getText().toString())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                /*Se ha registrado bien*/
-                                Toast.makeText(ctx, "Usuario registrado", Toast.LENGTH_SHORT).show();
-                                User user = new User();
-                                user.setName(emailText.getText().toString());
-                                user.setEmail(emailText.getText().toString()+"@FlipASwitch.com");
-                                users.child(auth.getCurrentUser().getUid()).setValue(user);
-                                if(auth.getCurrentUser().getEmail() != null){
-                                    String[] username = auth.getCurrentUser().getEmail().split("@");
-                                    asUsertxt.setText("as "+username[0]);
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ctx, "Error en el registro", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
-        });
-        dialog.show();
-
-    }
+//    private void showRegisterDialog() {
+//        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("REGISTER");
+//        dialog.setMessage("La contraseña debe tener 6 caracteres como mínimo");
+//
+//        LayoutInflater inflater=LayoutInflater.from(this);
+//        View register = inflater.inflate(R.layout.register,null);
+//        dialog.setView(register);
+//
+//        final EditText emailText= register.findViewById(R.id.emailText);
+//        final EditText passwordText= register.findViewById(R.id.passwordText);
+//
+//        dialog.setPositiveButton("REGISTER", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+////                auth.signInWithEmailAndPassword("df","DASF")
+////                        .onS
+//                auth.createUserWithEmailAndPassword(emailText.getText().toString()+"@FlipASwitch.com",passwordText.getText().toString())
+//                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+//                            @Override
+//                            public void onSuccess(AuthResult authResult) {
+//                                /*Se ha registrado bien*/
+//                                Toast.makeText(ctx, "Usuario registrado", Toast.LENGTH_SHORT).show();
+//                                User user = new User();
+//                                user.setName(emailText.getText().toString());
+//                                user.setEmail(emailText.getText().toString()+"@FlipASwitch.com");
+//                                users.child(auth.getCurrentUser().getUid()).setValue(user);
+//                                if(auth.getCurrentUser().getEmail() != null){
+//                                    String[] username = auth.getCurrentUser().getEmail().split("@");
+//                                    asUsertxt.setText("as "+username[0]);
+//                                }
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Toast.makeText(ctx, "Error en el registro", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//            }
+//        });
+//        dialog.show();
+//
+//    }
 
 
 }

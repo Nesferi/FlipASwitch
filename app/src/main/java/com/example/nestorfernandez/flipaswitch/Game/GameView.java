@@ -46,7 +46,7 @@ public class GameView extends SurfaceView {
     private ArrayList<Bitmap> spriteListFly = new ArrayList<>();
     private ArrayList<Bitmap> spriteListGround = new ArrayList<>();
     private Sprite2 sprite2;
-
+    private Boolean isThisAllowed = true;
 
     //Constructor. Recibe un context, genera el holder y define sus clases
     public GameView(Context context) {
@@ -61,6 +61,7 @@ public class GameView extends SurfaceView {
                 gameLoopThread.setRunning(true);
                 //Arrancamos el metodo run
                 gameLoopThread.start();
+                isThisAllowed = true;
 
             }
             //Cambio en la vista (?)
@@ -124,17 +125,15 @@ public class GameView extends SurfaceView {
 
     @Override
     public void onDraw(Canvas canvas) {
+        if(canvas!=null){
+
         //Creamos un rectangulo con el tamaño de la pantalla
-        // Rect ( left, top, right, bottom)
-        //Rect dst= new Rect(0,0,constant.getMobile_width(),constant.getMobile_height());
         Rect dst= new Rect(0,0,canvas.getWidth(),canvas.getHeight());
 
         //Cogemos el frame de background que queramos
         int left = (int) (backframe*0.02*back_width);
         int right =  left+back_width;
         Rect background = new Rect(left,0,right,backgr2.getHeight());
-        /*Log.i("etiqueta","background. right: "+background.width()+" - "+backgr2.getWidth()+" ," +
-                " Height: "+background.height()+" - "+backgr2.getHeight()+" canvas height: "+canvas.getHeight()+" canvas width: "+canvas.getWidth());*/
         //Pintamos el background backgr, adaptandolo al rectangulo dst
         canvas.drawBitmap(backgr2,background /*background*/,dst,null);
 
@@ -157,9 +156,16 @@ public class GameView extends SurfaceView {
 
         canvas.drawText(constant.getPoints()+"Pts", constant.getMobile_width()/2, 50, paint);
         if(isCollition()){
-            Activity activity = (Activity) getContext();
-            activity.finish();
+            if(isThisAllowed){
+                isThisAllowed=false;
+                Activity activity = (Activity) getContext();
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                activity.finish();
+            }
+
         }
+        }
+
     }
 
 

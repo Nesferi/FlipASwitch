@@ -28,9 +28,6 @@ public class LeaderboardActivity extends AppCompatActivity {
     private TextView txtPoints3;
     private TextView txtPoints4;
     private TextView txtPoints5;
-    FirebaseAuth auth;
-    FirebaseDatabase db;
-    DatabaseReference points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,38 +38,33 @@ public class LeaderboardActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_leaderboard);
 
-        txtPlayer1 = (TextView) findViewById(R.id.txtPlayer1);
-        txtPlayer2 = (TextView) findViewById(R.id.txtPlayer2);
-        txtPlayer3 = (TextView) findViewById(R.id.txtPlayer3);
-        txtPlayer4 = (TextView) findViewById(R.id.txtPlayer4);
-        txtPlayer5 = (TextView) findViewById(R.id.txtPlayer5);
-        txtPoints1 = (TextView) findViewById(R.id.txtPoints1);
-        txtPoints2 = (TextView) findViewById(R.id.txtPoints2);
-        txtPoints3 = (TextView) findViewById(R.id.txtPoints3);
-        txtPoints4 = (TextView) findViewById(R.id.txtPoints4);
-        txtPoints5 = (TextView) findViewById(R.id.txtPoints5);
+        TextView[] playerArray = new TextView[5];
+        TextView[] pointsArray = new TextView[5];
 
-        auth = FirebaseAuth.getInstance();
-        db= FirebaseDatabase.getInstance();
-        points=db.getReference("puntos");
+        playerArray[0] = (TextView) findViewById(R.id.txtPlayer1);
+        playerArray[1] = (TextView) findViewById(R.id.txtPlayer2);
+        playerArray[2] = (TextView) findViewById(R.id.txtPlayer3);
+        playerArray[3] = (TextView) findViewById(R.id.txtPlayer4);
+        playerArray[4] = (TextView) findViewById(R.id.txtPlayer5);
+        pointsArray[0] = (TextView) findViewById(R.id.txtPoints1);
+        pointsArray[1] = (TextView) findViewById(R.id.txtPoints2);
+        pointsArray[2] = (TextView) findViewById(R.id.txtPoints3);
+        pointsArray[3] = (TextView) findViewById(R.id.txtPoints4);
+        pointsArray[4] = (TextView) findViewById(R.id.txtPoints5);
 
-        db.getReference("puntos").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("Datos",dataSnapshot.getValue()+"");
-                Points points=dataSnapshot.getValue(Points.class);
-
-                Log.i("Datos","Name   "+points.getName());
-                Log.i("Datos","Points   "+points.getPoints());
-
-            }
-
-            @Override
-
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        BDHelper helper = new BDHelper(this);
+        helper.openDB();
+        String info = helper.showPuntos();
+        String[] parts = info.split("\n");
+        for (int i=0; i<playerArray.length; i++){
+            System.out.println("partes: "+i);
+            String[] nampoin = parts[i].split("_");
+            System.out.println("player array "+i+" : "+playerArray[i]);
+            System.out.println("points array "+i+" : "+pointsArray[i]);
+            playerArray[i].setText(nampoin[0]);
+            pointsArray[i].setText(nampoin[1]);
+        }
+        helper.closeDB();
 
     }
 }

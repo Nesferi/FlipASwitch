@@ -14,13 +14,13 @@
         <TextView
             android:id="@+id/txtPlayer"
             android:layout_width="228dp"
-            android:layout_height="25dp"
+            android:layout_height="33dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/player"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toStartOf="@+id/txtPoints"
@@ -32,12 +32,12 @@
         <TextView
             android:id="@+id/txtPoints"
             android:layout_width="228dp"
-            android:layout_height="25dp"
+            android:layout_height="33dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="8dp"
             android:text="@string/points"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,35 +64,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player1" />
+                android:text="Player1"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPlayer2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player2" />
+                android:text="Player2"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPlayer3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player3" />
+                android:text="Player3"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPlayer4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player4" />
+                android:text="Player4"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPlayer5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player5" />
+                android:text="Player5"
+                android:textSize="24sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -115,35 +120,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Points1" />
+                android:text="Points1"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPoints2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Points2" />
+                android:text="Points2"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPoints3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPoints4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txtPoints5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:text="TextView"
+                android:textSize="24sp" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
