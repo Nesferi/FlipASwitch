@@ -18,16 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LeaderboardActivity extends AppCompatActivity {
 
-    private TextView txtPlayer1;
-    private TextView txtPlayer2;
-    private TextView txtPlayer3;
-    private TextView txtPlayer4;
-    private TextView txtPlayer5;
-    private TextView txtPoints1;
-    private TextView txtPoints2;
-    private TextView txtPoints3;
-    private TextView txtPoints4;
-    private TextView txtPoints5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

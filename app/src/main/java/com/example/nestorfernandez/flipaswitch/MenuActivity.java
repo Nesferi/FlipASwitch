@@ -22,20 +22,14 @@ import com.example.nestorfernandez.flipaswitch.Model.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 public class MenuActivity extends Activity {
 
     private Button btnPlay;
     private Button btnLeaderboard;
-    private Button btnLogIn;
     private Button btnRegister;
-    private TextView asUsertxt;
     private Context ctx = this;
+    private Boolean secondChance = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +43,8 @@ public class MenuActivity extends Activity {
 
 
         btnPlay = (Button) findViewById(R.id.btnPlay);
-        btnLogIn = (Button) findViewById(R.id.btnLog);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnLeaderboard = (Button) findViewById(R.id.btnLeaderboard);
-        asUsertxt = (TextView) findViewById(R.id.userTextView);
 
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,30 +55,18 @@ public class MenuActivity extends Activity {
             }
         });
 
-        btnLogIn.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BDHelper helper = new BDHelper(ctx);
-                helper.openDB();
-                helper.matalosATodos();
-                helper.closeDB();
+                showRegisterDialog();
             }
         });
-
-//        btnRegister.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showRegisterDialog();
-//            }
-//        });
 
         btnLeaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ctx,LeaderboardActivity.class);
                 startActivity(intent);
-//                android.os.Process.killProcess(android.os.Process.myPid());
-//                System.exit(1);
             }
         });
 
@@ -94,48 +74,40 @@ public class MenuActivity extends Activity {
 
 
     private void showRegisterDialog() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Usuario");
-        dialog.setMessage("La contraseña debe tener 6 caracteres como mínimo");
 
-        LayoutInflater inflater=LayoutInflater.from(this);
-        View register = inflater.inflate(R.layout.register,null);
-        dialog.setView(register);
+            Log.i("etiqueta","activity finish");
 
-        final EditText emailText= register.findViewById(R.id.emailText);
-        final EditText passwordText= register.findViewById(R.id.passwordText);
-
-        dialog.setPositiveButton("REGISTER", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-//                auth.signInWithEmailAndPassword("df","DASF")
-//                        .onS
-                auth.createUserWithEmailAndPassword(emailText.getText().toString()+"@FlipASwitch.com",passwordText.getText().toString())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                /*Se ha registrado bien*/
-                                Toast.makeText(ctx, "Usuario registrado", Toast.LENGTH_SHORT).show();
-                                User user = new User();
-                                user.setName(emailText.getText().toString());
-                                user.setEmail(emailText.getText().toString()+"@FlipASwitch.com");
-                                users.child(auth.getCurrentUser().getUid()).setValue(user);
-                                if(auth.getCurrentUser().getEmail() != null){
-                                    String[] username = auth.getCurrentUser().getEmail().split("@");
-                                    asUsertxt.setText("as "+username[0]);
-                                }
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(ctx, "Error en el registro", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+            final AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
+            dialog.setTitle("Elige un nombre para guardar tus puntos");
+            if(secondChance){
+                dialog.setMessage("Por favor, escribe algo!");
+            }else{
+                dialog.setMessage("Escribe tu nombre para guardar tus puntos!");
             }
-        });
-        dialog.show();
 
+            LayoutInflater inflater=LayoutInflater.from(ctx);
+            View endGame = inflater.inflate(R.layout.endgame,null);
+            dialog.setView(endGame);
+
+            final EditText userText= endGame.findViewById(R.id.userText);
+
+            dialog.setPositiveButton("REGISTER", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    System.out.println(" "+userText.getText().toString());
+
+                        if((" "+userText.getText()).equals(" ")){
+                            secondChance = true;
+                            showRegisterDialog();
+                        }else{
+                            secondChance = false;
+                            constant.setUserName(userText.getText().toString());
+                            Toast.makeText(ctx, "A partir de ahora, tus puntos se guardaran como: "+userText.getText().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                }
+            });
+            dialog.show();
     }
 
 

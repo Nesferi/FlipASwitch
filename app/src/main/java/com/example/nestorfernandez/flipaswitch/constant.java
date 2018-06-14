@@ -10,6 +10,7 @@ public abstract class constant {
     private static int ground;
     private static int cieling;
     private static int points;
+    private static String userName = " ";
 
     public static int getMobile_height() {
         return mobile_height;
@@ -54,4 +55,8 @@ public abstract class constant {
     public static void incrementPoints(){
         points++;
     }
+
+    public static String getUserName(){ return userName;}
+
+    public static void setUserName(String name){constant.userName = name;}
 }

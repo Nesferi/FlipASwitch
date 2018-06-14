@@ -1,7 +1,9 @@
 package com.example.nestorfernandez.flipaswitch.Game;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,11 +11,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.nestorfernandez.flipaswitch.AudioService;
+import com.example.nestorfernandez.flipaswitch.BDHelper;
 import com.example.nestorfernandez.flipaswitch.R;
 import com.example.nestorfernandez.flipaswitch.Sprites.Sprite;
 import com.example.nestorfernandez.flipaswitch.Sprites.Sprite2;
@@ -47,10 +54,11 @@ public class GameView extends SurfaceView {
     private ArrayList<Bitmap> spriteListGround = new ArrayList<>();
     private Sprite2 sprite2;
     private Boolean isThisAllowed = true;
-
+    public Context ctx = null;
     //Constructor. Recibe un context, genera el holder y define sus clases
     public GameView(Context context) {
         super(context);
+        ctx = context;
         gameLoopThread=new GameLoopThread(this);
         holder=getHolder();
         holder.addCallback(new SurfaceHolder.Callback() {
@@ -159,15 +167,12 @@ public class GameView extends SurfaceView {
             if(isThisAllowed){
                 isThisAllowed=false;
                 Activity activity = (Activity) getContext();
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 activity.finish();
             }
-
         }
         }
 
     }
-
 
     private boolean isCollition() {
         Rect player = sprite2.getPosition();
