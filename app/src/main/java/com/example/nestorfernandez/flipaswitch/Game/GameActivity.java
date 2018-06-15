@@ -1,25 +1,18 @@
 package com.example.nestorfernandez.flipaswitch.Game;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.nestorfernandez.flipaswitch.BDHelper;
-import com.example.nestorfernandez.flipaswitch.R;
 import com.example.nestorfernandez.flipaswitch.constant;
 
 import com.example.nestorfernandez.flipaswitch.AudioService;
@@ -30,9 +23,6 @@ public class GameActivity extends Activity {
     private ServiceConnection serviceConnection;
     private boolean isServiceBound;
     private AudioService audioService;
-    private Context ctx = this;
-//    private FirebaseAuth auth;
-//    private FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +48,10 @@ public class GameActivity extends Activity {
 
     private void PlayMusic() {
 
-        Log.i("service2", "Aun no en service connected");
         serviceConnection=new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 isServiceBound=true;
-                Log.i("service2", "On service connected");
                 audioService=((AudioService.MyServiceBinder) service).getService();
             }
 
@@ -87,8 +75,9 @@ public class GameActivity extends Activity {
     public void finish() {
 
         super.finish();
+        //Detenemos la música
         stopService(serviceIntent);
-        System.out.println("on finish");
+        //Si ha elegido nombre lo guardamos en la base de datos con su puntuación, si no no
         if(!constant.getUserName().toString().equals(" ")){
         BDHelper helper = new BDHelper(this);
         helper.openDB();

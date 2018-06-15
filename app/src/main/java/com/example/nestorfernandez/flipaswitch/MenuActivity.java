@@ -75,10 +75,10 @@ public class MenuActivity extends Activity {
 
     private void showRegisterDialog() {
 
-            Log.i("etiqueta","activity finish");
-
+            //Creo el Alert de logeo
             final AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
             dialog.setTitle("Elige un nombre para guardar tus puntos");
+            //Boolean para cambiar el título si es la primera vez o no
             if(secondChance){
                 dialog.setMessage("Por favor, escribe algo!");
             }else{
@@ -95,7 +95,7 @@ public class MenuActivity extends Activity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     System.out.println(" "+userText.getText().toString());
-
+                        //Si el nombre está vacío, volvemos a cargar el dialog
                         if((" "+userText.getText()).equals(" ")){
                             secondChance = true;
                             showRegisterDialog();

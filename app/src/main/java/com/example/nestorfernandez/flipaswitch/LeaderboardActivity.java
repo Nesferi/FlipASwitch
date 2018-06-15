@@ -46,13 +46,19 @@ public class LeaderboardActivity extends AppCompatActivity {
         helper.openDB();
         String info = helper.showPuntos();
         String[] parts = info.split("\n");
-        for (int i=0; i<playerArray.length; i++){
-            System.out.println("partes: "+i);
+        // Relleno las puntuaciones que haya (Mínimo dos puntuaciones y máximo 5)
+        for (int i=0; i<parts.length; i++) {
+            System.out.println("partes"+parts.length);
+        }
+            if(parts.length>=2){
+
+        for (int i=0; i<parts.length; i++){
             String[] nampoin = parts[i].split("_");
             System.out.println("player array "+i+" : "+playerArray[i]);
             System.out.println("points array "+i+" : "+pointsArray[i]);
             playerArray[i].setText(nampoin[0]);
             pointsArray[i].setText(nampoin[1]);
+        }
         }
         helper.closeDB();
 

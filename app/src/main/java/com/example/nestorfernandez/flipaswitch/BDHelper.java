@@ -21,6 +21,8 @@ public class BDHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS puntuacion(id INTEGER PRIMARY KEY AUTOINCREMENT, user TEXT NOT NULL, points INTEGER NOT NULL)");
+        String [] columns= new String[]{"user","points"};
+        Cursor c = db.query("puntuacion",columns,null,null,null,null,"points DESC","5");
     }
 
     @Override

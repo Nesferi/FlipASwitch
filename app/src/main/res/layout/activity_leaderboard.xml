@@ -19,7 +19,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="@string/player"
+            android:text="Jugador"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
@@ -36,7 +36,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="40dp"
             android:layout_marginTop="8dp"
-            android:text="@string/points"
+            android:text="Puntos"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -64,7 +64,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player1"
                 android:textSize="24sp" />
 
             <TextView
@@ -72,7 +71,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player2"
                 android:textSize="24sp" />
 
             <TextView
@@ -80,7 +78,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player3"
                 android:textSize="24sp" />
 
             <TextView
@@ -88,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player4"
                 android:textSize="24sp" />
 
             <TextView
@@ -96,7 +92,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Player5"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -120,7 +115,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Points1"
                 android:textSize="24sp" />
 
             <TextView
@@ -128,7 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Points2"
                 android:textSize="24sp" />
 
             <TextView
@@ -136,7 +129,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
                 android:textSize="24sp" />
 
             <TextView
@@ -144,7 +136,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
                 android:textSize="24sp" />
 
             <TextView
@@ -152,7 +143,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
                 android:textSize="24sp" />
         </LinearLayout>
 

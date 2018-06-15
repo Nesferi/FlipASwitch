@@ -72,7 +72,6 @@ public class GameView extends SurfaceView {
                 isThisAllowed = true;
 
             }
-            //Cambio en la vista (?)
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
@@ -149,7 +148,7 @@ public class GameView extends SurfaceView {
         //Creo el rectángulo que contendrá el espacio entre el suelo y el techo de la aplicación
         Rect game = new Rect(0, constant.getCieling(),constant.getMobile_width(),constant.getGround());
 
-
+        // Movemos el fondo de pantalla
         backframe=++backframe%50;
 
         //Llamamos al onDraw del sprite, pasandole el canvas y el rectangulo por donde se moverá
@@ -163,7 +162,9 @@ public class GameView extends SurfaceView {
         }
 
         canvas.drawText(constant.getPoints()+"Pts", constant.getMobile_width()/2, 50, paint);
+        //Comprobamos si ha chocado con algún enemigo/fuego
         if(isCollition()){
+            // El boolean es porque al hilo le daba tiempo a detectar en dos ticks la colisión antes de que la actividad finalizara
             if(isThisAllowed){
                 isThisAllowed=false;
                 Activity activity = (Activity) getContext();
@@ -175,6 +176,7 @@ public class GameView extends SurfaceView {
     }
 
     private boolean isCollition() {
+        //Compruebo si el rectangulo que contiene al personaje entra en contacto con algún rectángulo de fuego/enemigo
         Rect player = sprite2.getPosition();
         for (int i = 0; i < spritesFires.size(); i++) {
             Rect fire = spritesFires.get(i).getPosition();
@@ -187,6 +189,7 @@ public class GameView extends SurfaceView {
 
 
     public void fireGenerate(Canvas canvas) {
+        //Hay un 5% de posibilidades de generar un enemigo ( 50% fuego y 50% enemigo)
         Random rand = new Random();
         int n = rand.nextInt(100);
         if(n<5){
@@ -208,11 +211,13 @@ public class GameView extends SurfaceView {
     }
 
     public void fireDestroyer(){
+        //Eliminamos el enemigo del array cuando desaparezca de la pantalla
         spritesFires.remove(0);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        //Cada vez que se toca la pantalla
         sprite2.flipASwitch();
         return super.onTouchEvent(event);
     }
