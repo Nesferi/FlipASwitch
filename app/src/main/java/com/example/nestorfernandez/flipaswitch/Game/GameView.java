@@ -1,9 +1,7 @@
 package com.example.nestorfernandez.flipaswitch.Game;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,18 +9,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.nestorfernandez.flipaswitch.AudioService;
-import com.example.nestorfernandez.flipaswitch.BDHelper;
 import com.example.nestorfernandez.flipaswitch.R;
-import com.example.nestorfernandez.flipaswitch.Sprites.Sprite;
 import com.example.nestorfernandez.flipaswitch.Sprites.Sprite2;
 import com.example.nestorfernandez.flipaswitch.Sprites.SpriteFire;
 import com.example.nestorfernandez.flipaswitch.constant;
